@@ -1,6 +1,12 @@
-# Hyrule Compendium API Ruby Wrapper
+<p align="center">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Ruby_logo.svg/1024px-Ruby_logo.svg.png" length=10% width=10%>
+</p>
 
-The official Ruby wrapper for the [Hyrule Compendium API](https://github.com/Hyrule-Compendium-API/Hyrule-Compendium-API). \
+<h1 align="center"> Hyrule Compendium API Ruby Wrapper</h1>
+<p align="center"><b>The official Ruby wrapper for the <a href="https://github.com/Hyrule-Compendium-API/Hyrule-Compendium-API">Hyrule Compendium API</a>.</b></p>
+
+***
+
 It's recommended that you read the [API documentation](https://github.com/Hyrule-Compendium-API/Hyrule-Compendium-API/blob/master/README.md) before getting started.
 
 ## Installation
@@ -29,5 +35,5 @@ Include the library with `require 'hyrule_compendium'.
 **Example**: `Hyrule_Compendium.get_category 'equipment'`
 
 #### `get_all`
-**Description**: Get all data.
+**Description**: Get all data. \
 **Example**: `Hyrule_Compendium.get_all`
