@@ -37,3 +37,6 @@ Include the library with `require 'hyrule_compendium'.
 #### `get_all`
 **Description**: Get all data. \
 **Example**: `Hyrule_Compendium.get_all`
+
+## Author
+Made with awesomeness by @gadhagod.
