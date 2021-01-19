@@ -11,19 +11,22 @@ def make_req url
     return JSON.parse res.body
 end
 
-module Hyrule_Compendium
-
-    $base = "http://botw-compendium.herokuapp.com/api/v1"
-
-    def Hyrule_Compendium.get_entry entry
-        return make_req("#{$base}/entry/#{entry.to_s.gsub " ", "%20"}")["data"]
+class Hyrule_Compendium
+    def initialize url="http://botw-compendium.herokuapp.com"
+        @base = url + "/api/v1"
     end
 
-    def Hyrule_Compendium.get_category category
-        return make_req("#{$base}/category/#{category}")["data"]
+    def get_entry entry
+        return make_req("#{@base}/entry/#{entry.to_s.gsub " ", "%20"}")["data"]
     end
 
-    def Hyrule_Compendium.get_all
-        return make_req $base
+    def get_category category
+        return make_req("#{@base}/category/#{category}")["data"]
+    end
+
+    def get_all
+        return make_req @base
     end
 end
+
+x = Hyrule_Compendium.new "http://127.0.0.1:5000"

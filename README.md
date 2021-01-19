@@ -15,7 +15,15 @@ It's recommended that you read the [API documentation](https://github.com/Hyrule
 
 ## Usage
 
-Include the library with `require 'hyrule_compendium'.
+Include the library.
+
+    require 'hyrule_compendium'
+
+Create a class instance.
+
+    compendium = Hyrule_Compendium.new
+
+All functions listed below are attributes of the `Hyrule_Compendium` class.
 
 #### `get_entry`
 **Description**: Get a specific item from the hyrule compendium.
@@ -38,5 +46,15 @@ Include the library with `require 'hyrule_compendium'.
 **Description**: Get all data. \
 **Example**: `Hyrule_Compendium.get_all`
 
+## Local hosting
+
+You can configure the target URL by setting `Hyrule_Compendium`'s class variable `url`. Here is an example:
+
+    Hyrule_Compendium.new 'http://127.0.0.1:5000'
+
+`/api/v1` is added to the URL.
+
+See [here](https://github.com/gadhagod/Hyrule-Compendium-API/blob/master/local/README.md) for help on hosting the server locally.
+
 ## Author
-Made with awesomeness by @gadhagod.
+Made with awesomeness by [@gadhagod](https://github.com/gadhagod).
