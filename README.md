@@ -15,46 +15,16 @@ It's recommended that you read the [API documentation](https://github.com/Hyrule
 
 ## Usage
 
-Include the library.
+    require 'hyrule_compendium'  # import library
+    compendium = Hyrule_Compendium.new  # create class instance
 
-    require 'hyrule_compendium'
+    compendium.get_entry 1  # get entry with ID
+    compendium.get_entry "horse"  # get entry with name
 
-Create a class instance.
+    compendium.get_category "monsters"  # get category
 
-    compendium = Hyrule_Compendium.new
+    compendium.get_all  # get everthing
 
-All functions listed below are attributes of the `Hyrule_Compendium` class.
+    compendium.download_entry_image "lynel", "lynel.png"
 
-#### `get_entry`
-**Description**: Get a specific item from the hyrule compendium.
-**Parameters**:
-
-* __entry__: Entry name of ID, str or int
-
-**Example**: `Hyrule_Compendium.get_entry 'silver lynel'`
-
-#### `get_category`
-
-**Description**: Get a specific category from the hyrule compendium.
-**Parameters**: 
-
-* __category__: Name of the cateogry, can be creatures, equipment, materials, monsters, or treasure
-
-**Example**: `Hyrule_Compendium.get_category 'equipment'`
-
-#### `get_all`
-**Description**: Get all data. \
-**Example**: `Hyrule_Compendium.get_all`
-
-## Local hosting
-
-You can configure the target URL by setting `Hyrule_Compendium`'s class variable `url`. Here is an example:
-
-    Hyrule_Compendium.new 'http://127.0.0.1:5000'
-
-`/api/v1` is added to the URL.
-
-See [here](https://github.com/gadhagod/Hyrule-Compendium-API/blob/master/local/README.md) for help on hosting the server locally.
-
-## Author
-Made with awesomeness by [@gadhagod](https://github.com/gadhagod).
+Detailed docs in code comments.

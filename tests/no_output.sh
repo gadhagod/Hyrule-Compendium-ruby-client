@@ -1,0 +1,1 @@
+[ ! -z $(ruby lib/hyrule_compendium.rb) ] && echo "'Hyrule_Compendium' base has output! Clear output before publishing." 

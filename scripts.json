@@ -1,0 +1,8 @@
+{
+    "build": "gem build hyrule_compendium.gemspec",
+    "test_install": "gem install \"./hyrule_compendium-$1.gem\"",
+    "publish": "gem push \"./hyrule_compendium-$1.gem\"",
+    "tests": {
+        "check_output": "sh tests/no_output.sh"
+    }
+}
