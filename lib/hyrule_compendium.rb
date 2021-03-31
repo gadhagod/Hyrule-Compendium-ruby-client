@@ -31,9 +31,9 @@ class NoCategoryError < StandardError
     end
 end
 
-def make_req url
+def make_req url, timeout
     uri = URI url
-    res = Net::HTTP.start uri.host, uri.port do |http|
+    res = Net::HTTP.start uri.host, uri.port, read_timeout: timeout do |http|
         req = Net::HTTP::Get.new uri
         http.request req
     end
@@ -47,32 +47,40 @@ class Hyrule_Compendium
     #   * `url`: The base URL of the API server
     #       - type: str
     #       - default: "http://botw-compendium.herokuapp.com/api/v2"
+    #   * `default_timeout`: Default seconds to wait for response for all API calling functions until raising `Net::ReadTimeout`.
+    #       - type: float, int
+    #       - default: `nil` (no timeout)
+    #       - notes: If a API calling function has a parameter `timeout`, it will overide this.
 
-    def initialize url="http://botw-compendium.herokuapp.com/api/v2"
+    def initialize url: "http://botw-compendium.herokuapp.com/api/v2", default_timeout: nil
         @base = url
+        @default_timeout = default_timeout
     end
 
-    def get_entry entry
+    def get_entry entry, timeout=@default_timeout
         # Gets an entry from the compendium.
         #
         # Parameters:
         #   * `entry`: The ID or name of the entry to be retrieved.
         #       - type: str, int
+        #   * `timeout`: Seconds to wait for response until raising `Net::ReadTimeout`.
+        #       - type: float, int
+        #       - default: `@default_timeout`
         #
         # Returns: The entry's metadata.
-        #   type: hash
+        #   - type: hash
         #
         # Raises:
         #   * `NoEntryError` when the entry is not found.
 
-        res = make_req "#{@base}/entry/#{entry.to_s.gsub " ", "%20"}"
+        res = make_req("#{@base}/entry/#{entry.to_s.gsub " ", "%20"}", timeout=timeout)
         if res == {}
             raise NoEntryError.new entry
         end
         return res
     end
 
-    def get_category category
+    def get_category category, timeout=@default_timeout
         # Gets all entries from a category in the compendium.
         # 
         # Parameters:
@@ -81,6 +89,12 @@ class Hyrule_Compendium
         #       - notes: 
         #           * must be "creatures", "equipment", "materials", "monsters", or "treasure"
         #           * the category "creatures" has two sub-categories, as keys: "food" and "non_food"
+        #   * `timeout`: Seconds to wait for response until raising `Net::ReadTimeout`.
+        #       - type: float, int
+        #       - default: `@default_timeout`
+        #
+        # Returns: All entries in the category.
+        #   - type: array, hash (for creatures)
         #
         # Raises:
         #   * `NoCategoryError` when the category is not found.
@@ -88,19 +102,24 @@ class Hyrule_Compendium
         if !(["creatures", "equipment", "materials", "monsters", "treasure"].include? category)
             raise NoCategoryError.new category
         end
-        return make_req "#{@base}/category/#{category}"
+        return make_req "#{@base}/category/#{category}", timeout=timeout
     end
 
-    def get_all
+    def get_all timeout=@default_timeout
         # Gets all entries from the compendium.
-        # 
+        #
+        # Parameters:
+        #   * `timeout`: Seconds to wait for response until raising `Net::ReadTimeout`.
+        #       - type: float, int
+        #       - default: `@default_timeout`
+        #
         # Returns: all items in the compendium with their metadata, nested in categories.
-        #   type: hash
+        #   - type: hash
 
-        return make_req @base
+        return make_req @base, timeout
     end
 
-    def download_entry_image entry, output_file
+    def download_entry_image entry, output_file, timeout=@default_timeout
         # Downloads the image of a compendium entry.
         # 
         # Parameters:
@@ -108,8 +127,11 @@ class Hyrule_Compendium
         #       - type: str, int
         #   * `output_file`: The output file's path.
         #       - type: str
+        #   * `timeout`: Seconds to wait for server response until raising `Net::ReadTimeout`.
+        #       - type: float, int
+        #       - default: `@default_timeout`
 
-        open (get_entry entry)["image"] do |image|
+        open (get_entry entry, timeout)["image"] do |image|
             File.open output_file, "wb" do |file|
                 file.write image.read
             end
