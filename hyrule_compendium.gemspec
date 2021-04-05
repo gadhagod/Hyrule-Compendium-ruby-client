@@ -1,6 +1,6 @@
 Gem::Specification.new do |specs|
     specs.name        = 'Hyrule-Compendium'
-    specs.version     = '3.1.0'
+    specs.version     = '3.2.0'
     specs.date        = '2021-01-02'
     specs.summary     = "Hyrule Compendium API"
     specs.description = "The official ruby wrapper for the Hyrule Compendium API"
