@@ -119,7 +119,7 @@ class Hyrule_Compendium
         return make_req @base, timeout
     end
 
-    def download_entry_image entry, output_file, timeout=@default_timeout
+    def download_entry_image entry, output_file=nil, timeout=@default_timeout
         # Downloads the image of a compendium entry.
         # 
         # Parameters:
@@ -127,12 +127,14 @@ class Hyrule_Compendium
         #       - type: str, int
         #   * `output_file`: The output file's path.
         #       - type: str
+        #       - default: entry's name with a ".png" extension with spaces replaced with underscores
         #   * `timeout`: Seconds to wait for server response until raising `Net::ReadTimeout`.
         #       - type: float, int
         #       - default: `@default_timeout`
 
-        open (get_entry entry, timeout)["image"] do |image|
-            File.open output_file, "wb" do |file|
+        entry_data = get_entry entry, timeout
+        open entry_data["image"] do |image|
+            File.open output_file || (entry_data["name"] + ".png").gsub(" ", "_"), "wb" do |file|
                 file.write image.read
             end
         end
